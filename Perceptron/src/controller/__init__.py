@@ -1,5 +1,4 @@
 ########  Rúbrica Canvas para espacio R^2(Plano cartesiano) ########
-
 # 10 Pts
 # TODO canvas para introducir los datos de entrenamiento en un plano
 #  cartesiano (2D) acotado entre valores -5 a 5
@@ -51,3 +50,13 @@
 # TODO el código de las funciones de ajuste de pesos
 # TODO la función de transferencia del perceptrón
 # TODO la función de graficado de la línea
+import tkinter as tk
+
+from perceptron.src.model import Perceptron
+from perceptron.src.view import PerceptronView
+
+class PerceptronController:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.model = Perceptron()
+        self.view = PerceptronView(self.root)
