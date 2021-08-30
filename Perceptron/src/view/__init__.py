@@ -1,8 +1,11 @@
 from tkinter import *
+import os
 
 
 class PerceptronView:
     # GUI Constants
+    GUI_TITLE = 'Implementación perceptrón'
+
     CANVAS_PADDING_Y = 20
 
     CANVAS_BG_COLOR = "white"
@@ -23,6 +26,21 @@ class PerceptronView:
 
     DEFAULT_LANGUAGE = "en"
 
-    def __init__(self, master):
+    def __init__(self, master: Tk):
+        # Hack to set DISPLAY env variable if not set, this is need for tk,
+        # if can't create or connect the computer don't have a display
+        if os.environ.get('DISPLAY', '') == '':
+            print('no display found. Using :0.0')
+            os.environ.__setitem__('DISPLAY', ':0.0')
+
+        master.title = self.GUI_TITLE
+
+        self.WINDOW_WIDTH = master.winfo_screenwidth() or 1440
+        self.WINDOW_HEIGHT = master.winfo_screenheight() or 1024
+
+        master.geometry(f"{self.WINDOW_WIDTH}x{self.WINDOW_HEIGHT}")
+        master.resizable(1, 1)
+
+
         self.container = master
         self.frame = Frame(self.container)
