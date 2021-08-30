@@ -1,49 +1,4 @@
-########  Rúbrica Canvas para espacio R^2(Plano cartesiano) ########
-# 10 Pts
-# TODO canvas para introducir los datos de entrenamiento en un plano
-#  cartesiano (2D) acotado entre valores -5 a 5
-
-# TODO click derecho se guardarán las coordenadas del punto en el conjunto de
-#  datos de entrenamiento y la clase deseada como 1
-
-# TODO click izquierdo se guardarán las coordenadas del punto en el conjunto
-#  de datos de entrenamiento y la clase deseada será 0 (o -1 para los que
-#  deseen trabajar con etiquetas bipolares)
-
-
-########  Rúbrica Hiperparámetros: learning rate , épocas máximas ########
-# 10 Pts / 5 si no se cumple alguno
-# TODO textbox learning rate
-
-# TODO épocas máximas
-
-# TODO gráfica del error acumulado por época
-
-########  Rúbrica Inicialización de pesos ########
-# 10 Pts
-# TODO botón que permita inicializar el vector de pesos
-# TODO cuando estos se inicialicen deberán mostrar la línea recta que definen
-#  esos pesos en el canvas del plano cartesiano
-
-########  Rúbrica Algoritmo de entrenamiento y linea en cada actualización
-########
-# 30 Pts
-# Una vez inicializado
-# TODO botón de entrenamiento del perceptrón
-# TODO cada que el algoritmo entre a modificar los pesos, se mostrará en
-#  tiempo real la recta modificada en el canvas 2D.
-
-########  Rúbrica Convergencia final ########
-# 20 Pts
-# Al finalizar el entrenamiento
-# TODO desplegarán el número de épocas en el que convergió el algoritmo
-# TODO matriz de confusión resultante.
-# TODO introducir datos de prueba en el canvas para que los evalúen de
-#  acuerdo a la línea ajustada y encontrada por el perceptrón determinar la
-#  clase en la que el perceptrón ha aprendido a posicionar el punto
-
-
-########  Rúbrica Entregables ########
+######## 6.- Rúbrica Entregables ########
 # 20 Pts
 # reporte de práctica
 # TODO breve explicación de lo que es el perceptrón
@@ -61,6 +16,67 @@ class PerceptronController:
         self.root = tk.Tk()
         self.model = Perceptron()
         self.view = PerceptronView(self.root)
+
+        # For publisher/Subscriber Pattern
+        # send a message pub.sendMessage(message, data)
+        # subscribe to a message pub.subscribe(function to process the message,
+        # message)
+
+        # Events Info
+        # left click = 1, right click = 2
+
+        # bind a event to a method
+        # view element.bind('event', function)
+        # canvas.callbacks.connect('event', function)
+
+        ########  1.- Rúbrica Canvas para espacio R^2(Plano cartesiano) ########
+        # 10 Pts
+        # TODO bind the canvas2D to send a message to send a dictionary with
+        #  coordinates and 1 if right click or 0 if left click (1 o -1 if
+        #  bipolar labels) if not fitted Front-to-back
+
+        ######## 2.- Rúbrica Hiperparámetros: learning rate , épocas máximas
+        # ########
+        # 10 Pts / 5 si no se cumple alguno
+        # TODO bind <Return>, <Unmap>, <FocusOut> on spinbox to send a
+        #  message with the new learning rate Front-to-back
+
+        # TODO bind <Return>, <Unmap>, <FocusOut> on spinbox to send a
+        #  message with the new max epoch Front-to-back
+
+        # TODO bind calculate error per epoch to send a message with the new
+        #  accumulative error Back-to-Front
+
+        ######## 3.- Rúbrica Inicialización de pesos ########
+        # 10 Pts
+        # TODO bind the init button to send a message to init weights
+        #  Front-to-Back
+
+        # TODO bind init weights to send a message to draw a line with the
+        #  values to draw Back-to-Front
+
+        ######## 4.- Rúbrica Algoritmo de entrenamiento y linea en cada actualización
+        ########
+        # 30 Pts
+        # Una vez inicializado
+        # TODO bind train method for every epoch send a message to draw a
+        #  line with the values to draw Back-to-Front
+
+        ######## 5.- Rúbrica Convergencia final ########
+        # 20 Pts
+        # Al finalizar el entrenamiento
+        # TODO bind the end of the train function to send a message to set
+        #  the epoch converge value to display Back-to-Front
+        # TODO bind the end of the train function to send a message to set
+        #  the confusion matrix Back-to-Front
+        # TODO bind the canvas2D to send a message to send the coordinates if
+        #  fitted Front-to-Back
+        # TODO bind the test function to send a boolean with the returned
+        #  class type
+
+
+    def run(self):
+        self.root.deiconify()
         print('---- Starting main event loop ----')
         self.root.mainloop()
         print('---- Exited main event loop ----')
