@@ -55,8 +55,12 @@ import tkinter as tk
 from perceptron.src.model import Perceptron
 from perceptron.src.view import PerceptronView
 
+
 class PerceptronController:
     def __init__(self):
         self.root = tk.Tk()
         self.model = Perceptron()
         self.view = PerceptronView(self.root)
+        print('---- Starting main event loop ----')
+        self.root.mainloop()
+        print('---- Exited main event loop ----')
