@@ -13,9 +13,8 @@ from perceptron.src.view import PerceptronView
 
 class PerceptronController:
     def __init__(self):
-        self.root = tk.Tk()
         self.model = Perceptron()
-        self.view = PerceptronView(self.root)
+        self.view = PerceptronView()
 
         # For publisher/Subscriber Pattern
         # send a message pub.sendMessage(message, data)
@@ -72,11 +71,20 @@ class PerceptronController:
         # TODO bind the canvas2D to send a message to send the coordinates if
         #  fitted Front-to-Back
         # TODO bind the test function to send a boolean with the returned
-        #  class type
+        #  class type and test the following code ref
+        #  https://stackoverflow.com/questions/58319693/how-to-disconnect-matplotlibs-event-handler
+        #  Back-to-Front
+        # def de_activate(self):
+        #     print('checkbutton: ' + str(self.var1.get()))
+        #     if self.var1.get() == 1:
+        #         self.cidpress = self.fig.canvas.mpl_connect(
+        #             'button_press_event', self.on_press)
+        #         print('on_press connected (cid=' + str(self.cidpress) + ')')
+        #     else:
+        #         self.fig.canvas.mpl_disconnect(self.cidpress)
+        #         self.cidpress = 0  # <<<<<<<<<<<<<<<<<<<<
+        #         print('on_press disconnected (cid=' + str(self.cidpress) + ')')
 
 
     def run(self):
-        self.root.deiconify()
-        print('---- Starting main event loop ----')
-        self.root.mainloop()
-        print('---- Exited main event loop ----')
+        self.view.run()
