@@ -388,29 +388,6 @@ class PerceptronView:
         self.main_window.mainloop()
         print('---- Exited main event loop ----')
 
-        ######## 2.- Rúbrica Hiperparámetros: learning rate , épocas máximas
-        # ########
-        # 10 Pts / 5 si no se cumple alguno
-        # TODO create learning rate spinbox
-        # TODO create max epoch spinbox
-        # TODO create an empty error graph bar
-        # TODO receive a new accumulative error from a new epoch and draw it
-        #  on a new bar
-
-        ######## 3.- Rúbrica Inicialización de pesos ########
-        # 10 Pts
-        # TODO create a init weights button
-        # TODO create a function to receive a dictionary with the data for
-        #  drawing a line (perceptron description) in the canvas
-
-        ######## 4.- Rúbrica Algoritmo de entrenamiento y linea en cada
-        # actualización
-        ########
-        # 30 Pts
-        # Una vez inicializado
-        # TODO create a perceptron training button
-        # TODO reuse the same function for draw a line
-
         ######## 5.- Rúbrica Convergencia final ########
         # 20 Pts
         # Al finalizar el entrenamiento
