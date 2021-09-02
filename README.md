@@ -1,5 +1,6 @@
 # IA2
 Works for IA2 class with Perceptron, Adaline, Back-propagation implementations
+Please read the [wiki](https://github.com/Arevalo-Edgar14/IA2/blob/main/README.md#wiki-)
 
 ## Comenzando 🚀
 
