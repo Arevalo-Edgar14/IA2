@@ -1,0 +1,438 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="toplevel">
+    <property name="container">false</property>
+    <property name="geometry">1440x900</property>
+    <property name="height">200</property>
+    <property name="takefocus">false</property>
+    <property name="width">200</property>
+    <bind sequence="" handler="" add="" />
+    <child>
+      <object class="ttk.Frame" id="top_frame">
+        <property name="height">200</property>
+        <property name="width">300</property>
+        <layout manager="pack">
+          <property name="anchor">center</property>
+          <property name="expand">true</property>
+          <property name="fill">both</property>
+          <property name="padx">20</property>
+          <property name="pady">20</property>
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Frame" id="hyper_parameters_frame">
+            <property name="width">500</property>
+            <layout manager="pack">
+              <property name="anchor">nw</property>
+              <property name="expand">false</property>
+              <property name="propagate">True</property>
+              <property name="side">left</property>
+            </layout>
+            <child>
+              <object class="ttk.Label" id="hyper_parameters_label">
+                <property name="font">{Times New Roman} 24 {}</property>
+                <property name="text" translatable="yes">Hyper Parameters</property>
+                <layout manager="pack">
+                  <property name="padx">20</property>
+                  <property name="pady">20</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="bipolar_frame">
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="pady">5</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Checkbutton" id="bipolar_checkbutton">
+                    <property name="command" type="command" cbtype="simple">_onchange</property>
+                    <property name="text" translatable="yes">Bipolar</property>
+                    <property name="variable">boolean:bipolar</property>
+                    <layout manager="pack">
+                      <property name="expand">true</property>
+                      <property name="fill">x</property>
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="bounds_frame">
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="pady">5</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="bounds_label">
+                    <property name="text" translatable="yes">Bounds</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="bound_max_label">
+                    <property name="text" translatable="yes">-3   </property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Scale" id="bounds_scale">
+                    <property name="from_">-20</property>
+                    <property name="length">180</property>
+                    <property name="orient">horizontal</property>
+                    <property name="to">-3</property>
+                    <property name="value">-5</property>
+                    <property name="variable">double:bounds</property>
+                    <bind sequence="&lt;FocusOut&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Return&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Unmap&gt;" handler="_on_change" add="" />
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="bound_min_label">
+                    <property name="text" translatable="yes">-23</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="learning_rate_frame">
+                <property name="height">300</property>
+                <property name="width">300</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="pady">5</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="learning_rate_label">
+                    <property name="text" translatable="yes">Learning Rate</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="learning_rate_max_label">
+                    <property name="text" translatable="yes">0.01</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Scale" id="learning_rate_scale">
+                    <property name="from_">0.001</property>
+                    <property name="length">180</property>
+                    <property name="orient">horizontal</property>
+                    <property name="to">0.01</property>
+                    <property name="value">0.001</property>
+                    <property name="variable">double:learning_rate</property>
+                    <bind sequence="&lt;FocusOut&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Return&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Unmap&gt;" handler="_on_change" add="" />
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="learning_rate_min_label">
+                    <property name="text" translatable="yes">0.001</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="max_epoch_frame">
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="pady">5</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="max_epoch_label">
+                    <property name="text" translatable="yes">Max Epoch</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="max_epoch_max_label">
+                    <property name="text" translatable="yes">500 </property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Scale" id="max_epoch_scale">
+                    <property name="from_">50</property>
+                    <property name="length">180</property>
+                    <property name="orient">horizontal</property>
+                    <property name="to">500</property>
+                    <property name="value">100</property>
+                    <property name="variable">int:max_epoch</property>
+                    <bind sequence="&lt;FocusOut&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Return&gt;" handler="_on_change" add="" />
+                    <bind sequence="&lt;Unmap&gt;" handler="_on_change" add="" />
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="max_epoch_min_label">
+                    <property name="text" translatable="yes">50</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Frame" id="buttons_frame">
+                <property name="height">200</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">x</property>
+                  <property name="pady">5</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Button" id="initialize_button">
+                    <property name="command" type="command" cbtype="simple">initialize</property>
+                    <property name="image">initializeButton90x30.png</property>
+                    <property name="style">Toolbutton</property>
+                    <property name="text" translatable="yes">Initialize</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">left</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Button" id="perceptron_button">
+                    <property name="command" type="command" cbtype="simple">train</property>
+                    <property name="image">perceptronButton100x30.png</property>
+                    <property name="state">disabled</property>
+                    <property name="text" translatable="yes">Perceptron</property>
+                    <property name="width">15</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">right</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Labelframe" id="parameters_labelframe">
+                <property name="height">200</property>
+                <property name="text" translatable="yes">Selected Parameters</property>
+                <property name="width">200</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+                <child>
+                  <object class="ttk.Label" id="bipolar_selected_label">
+                    <property name="text" translatable="yes">Bipolar: False</property>
+                    <property name="textvariable">string:bipolar_selected</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="bounds_selected_label">
+                    <property name="text" translatable="yes">Bounds: -5</property>
+                    <property name="textvariable">string:bounds_selected</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="learning_rate_selectet_label">
+                    <property name="text" translatable="yes">Learning Rate: 0.001</property>
+                    <property name="textvariable">string:learning_rate_selectet</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+                <child>
+                  <object class="ttk.Label" id="max_epoch_selected_label">
+                    <property name="text" translatable="yes">Max Epoch: 100</property>
+                    <property name="textvariable">string:max_epoch_selectet</property>
+                    <layout manager="pack">
+                      <property name="propagate">True</property>
+                      <property name="side">top</property>
+                    </layout>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="plot_frame">
+            <layout manager="pack">
+              <property name="anchor">e</property>
+              <property name="expand">true</property>
+              <property name="fill">both</property>
+              <property name="pady">20</property>
+              <property name="propagate">True</property>
+              <property name="side">right</property>
+            </layout>
+            <child>
+              <object class="tk.Canvas" id="plot_canvas">
+                <property name="background">#e9e9e9</property>
+                <property name="relief">flat</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="fill">both</property>
+                  <property name="padx">50</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="botton_frame">
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="pack">
+          <property name="fill">x</property>
+          <property name="padx">20</property>
+          <property name="pady">20</property>
+          <property name="propagate">True</property>
+          <property name="side">top</property>
+        </layout>
+        <child>
+          <object class="ttk.Frame" id="confusion_matrix_frame">
+            <layout manager="pack">
+              <property name="expand">true</property>
+              <property name="fill">x</property>
+              <property name="padx">20</property>
+              <property name="pady">20</property>
+              <property name="propagate">True</property>
+              <property name="side">left</property>
+            </layout>
+            <child>
+              <object class="ttk.Label" id="confision_matrix_label">
+                <property name="font">{Times New Roman} 24 {}</property>
+                <property name="text" translatable="yes">Confision Matrix</property>
+                <layout manager="pack">
+                  <property name="padx">20</property>
+                  <property name="pady">20</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Canvas" id="canvas2">
+                <property name="background">#e9e9e9</property>
+                <property name="confine">true</property>
+                <property name="takefocus">false</property>
+                <layout manager="pack">
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="graph_error_frame">
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout manager="pack">
+              <property name="expand">true</property>
+              <property name="fill">x</property>
+              <property name="padx">20</property>
+              <property name="pady">20</property>
+              <property name="propagate">True</property>
+              <property name="side">right</property>
+            </layout>
+            <child>
+              <object class="ttk.Label" id="graph_error_label">
+                <property name="font">{Times New Roman} 24 {}</property>
+                <property name="text" translatable="yes">Graph Error</property>
+                <layout manager="pack">
+                  <property name="padx">20</property>
+                  <property name="pady">20</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Canvas" id="canvas3">
+                <property name="background">#e9e9e9</property>
+                <layout manager="pack">
+                  <property name="expand">true</property>
+                  <property name="propagate">True</property>
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
