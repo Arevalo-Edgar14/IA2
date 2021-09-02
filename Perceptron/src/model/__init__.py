@@ -87,8 +87,7 @@ class Perceptron:
     def Pw(self, x):
         # x dot product weights
         xw = np.dot(x, self.w)
-        # return self.activation(xw)
-        return 1 if xw >= 0 else 0
+        return self.activation(xw)
 
     def error(self, x, i):
         return self.y[i] - self.Pw(x)
@@ -104,7 +103,6 @@ class Perceptron:
             xi = np.insert(xi, 0, -1.0)
 
             error = self.error(xi, i)
-            # errors += abs(error)
             if error != 0:
                 errors += 1
                 done = False
@@ -129,7 +127,6 @@ class Perceptron:
                         converge={"converge": done,
                                   "converged_epoch": self.converged_epoch})
         self.is_fitted = True if done else False
-        # converge if done == TRUE else not converge
 
         ######## 5.- Rúbrica Convergencia final ########
         # 20 Pts
@@ -138,8 +135,9 @@ class Perceptron:
         #  function
 
     def test(self, xy):
-        # TO SEE if need
-        # np.insert(test, 0, -1.0)
-        pub.sendMessage("point_added", point={"x": xy["pos"][0],
-                                              "y": xy["pos"][1],
+        print("Testing values")
+        xy = np.insert(xy, 0, -1.0)
+        # send 1 and 2 because of the insert of the input for the threshold
+        pub.sendMessage("point_added", point={"x": xy[1],
+                                              "y": xy[2],
                                               "value": self.Pw(xy)})
