@@ -1,11 +1,10 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import os
-
-from perceptron.src.view.plot import Plot
 
 
 class PerceptronView:
@@ -19,7 +18,7 @@ class PerceptronView:
     PERCEPTRON_BUTTON_PATH = '../../assets/perceptronButton100x30.png'
     INIT_BUTTON_IMAGE_PATH = '../../assets/initializeButton90x30.png'
 
-    CANVAS_PADDING = 50
+    CANVAS_PADDING = 30
     BIG_PADDING = 20
     PADDING = 10
     SMALL_PADDING = 5
@@ -33,17 +32,20 @@ class PerceptronView:
 
     BIPOLAR = False
 
-    BOUNDS_MIN = -5
-    BOUNDS_MAX = -1
-    BOUNDS = -5
+    BOUNDS_MIN = 1
+    BOUNDS_MAX = 5
+    BOUNDS = 1
 
     LEARNING_RATE_MIN = 0.001
-    LEARNING_RATE_MAX = 0.1
-    LEARNING_RATE = LEARNING_RATE_MAX
+    LEARNING_RATE_MAX = 1
+    LEARNING_RATE = 0.5
 
     MAX_EPOCH_MAX = 500
     MAX_EPOCH_MIN = 50
-    MAX_EPOCH = 100
+    MAX_EPOCH = 50
+
+    CURRENT_EPOCH_TEXT = "Current epoch: "
+    CURRENT_EPOCH_LABEL_COORD = 0.9
 
     DEFAULT_LANGUAGE = "en"
 
@@ -56,6 +58,9 @@ class PerceptronView:
 
         # get absolute path for images import
         absolute_path = os.path.dirname(os.path.realpath(__file__))
+
+        # to get a reference to the last line added
+        self.line = None
 
         # build ui
         # top level container (new window)
@@ -193,10 +198,10 @@ class PerceptronView:
         self.bipolar_selected_label.pack(side='top')
 
         self.bounds_selected = tk.StringVar(
-            value=f'Bounds: {self.bounds.get()} , {-1 * self.bounds.get()}')
+            value=f'Bounds: {-self.bounds.get()} , {self.bounds.get()}')
         self.bounds_selected_label = ttk.Label(
             self.parameters_labelframe,
-            text=f'Bounds: {self.bounds.get()} , {-1 * self.bounds.get()}',
+            text=f'Bounds: {-self.bounds.get()} , {self.bounds.get()}',
             textvariable=self.bounds_selected)
         self.bounds_selected_label.pack(side='top')
 
@@ -218,33 +223,47 @@ class PerceptronView:
 
         self.parameters_labelframe.pack(side='top')
 
+        ###
+        self.actual_values_labelframe = ttk.Labelframe(
+            self.hyper_parameters_frame, text='Variable values')
+        self.weights_selected_labels = []
+
+        self.converged = tk.StringVar(
+            value=f'Converged: False')
+        self.converged_label = ttk.Label(
+            self.actual_values_labelframe,
+            text=f'Converged: False',
+            textvariable=self.converged)
+        self.converged_label.pack(side='top')
+
+        self.converged_epoch = tk.StringVar(
+            value=f'Converged epoch: Not Ready')
+        self.converged_epoch_label = ttk.Label(
+            self.actual_values_labelframe,
+            text=f'Converged epoch: Not Ready',
+            textvariable=self.converged_epoch)
+        self.converged_epoch_label.pack(side='top')
+
+        self.actual_values_labelframe.pack(side='top')
+
+        self.reset_button_frame = ttk.Frame(self.hyper_parameters_frame)
+        self.reset_button = ttk.Button(self.reset_button_frame,
+                                       state=self.BUTTON_ENABLED,
+                                       text='Reset')
+        self.reset_button.pack(side='top')
+        self.reset_button_frame.pack(side='top')
+
         self.hyper_parameters_frame.pack(anchor='nw', expand='false',
                                          side='left')
 
         # main plot canvas2D frame
         self.plot_frame = ttk.Frame(self.top_frame)
-        # Create a figure
-        self.fig = Figure(facecolor=self.BACKGROUND)
-
-        # create a subplot to plot
-        self.ax = self.fig.add_subplot(111,
-                                       xlim=[-1 * self.bounds.get(),
-                                             self.bounds.get()],
-                                       ylim=[-1 * self.bounds.get(),
-                                             self.bounds.get()],
-                                       facecolor=f'tab:gray')
-
-        # Create a figure canvas to can connect the widget and connect it to
-        # the press event
-        self.canvas = FigureCanvasTkAgg(self.fig, master=self.plot_frame)
-
-        self.canvas.get_tk_widget().pack(expand='true', fill='both',
-                                         padx=self.CANVAS_PADDING, side='top')
+        self.create_main_canvas()
 
         self.plot_frame.pack(anchor='e', expand='true', fill='both',
-                             pady=self.BIG_PADDING, side='right')
+                             pady=self.SMALL_PADDING, side='right')
         self.top_frame.pack(anchor='center', expand='true', fill='both',
-                            padx=self.BIG_PADDING, pady=self.BIG_PADDING,
+                            padx=self.BIG_PADDING, pady=self.SMALL_PADDING,
                             side='top')
 
         # bottom frame with the confusion matrix and the graph bar error
@@ -255,31 +274,30 @@ class PerceptronView:
         self.confusion_matrix_label = ttk.Label(self.confusion_matrix_frame,
                                                 font=self.FONT_TITLE,
                                                 text='Confusion Matrix')
-        self.confusion_matrix_label.pack(padx=self.BIG_PADDING,
-                                         pady=self.BIG_PADDING, side='top')
+        self.confusion_matrix_label.pack(padx=self.SMALL_PADDING,
+                                         pady=self.SMALL_PADDING, side='top')
         # TODO see how to plot confusion matrix
         # Create a figure
-        self.confusion_matrix_fig = Figure(facecolor=self.BACKGROUND)
-
-        # create a subplot to plot
-        self.confusion_matrix_ax = self.confusion_matrix_fig \
-            .add_subplot(111,
-                         xlim=[-1 * self.bounds.get(),
-                               self.bounds.get()],
-                         ylim=[-1 * self.bounds.get(),
-                               self.bounds.get()],
-                         facecolor=f'tab:gray')
-
-        # Create a figure canvas to can connect the widget and connect it to
-        # the press event
-        self.confusion_matrix_canvas = FigureCanvasTkAgg(
-            self.confusion_matrix_fig, master=self.confusion_matrix_frame)
-
-        self.confusion_matrix_canvas.get_tk_widget().pack(side='top')
-
-        self.confusion_matrix_frame.pack(expand='true', fill='x',
-                                         padx=self.BIG_PADDING,
-                                         pady=self.BIG_PADDING, side='left')
+        # self.confusion_matrix_fig = Figure()
+        #
+        # # create a subplot to plot
+        # self.confusion_matrix_ax = self.confusion_matrix_fig \
+        #     .add_subplot(111,
+        #                  xlim=[-self.bounds.get(),
+        #                        self.bounds.get()],
+        #                  ylim=[-self.bounds.get(),
+        #                        self.bounds.get()])
+        #
+        # # Create a figure canvas to can connect the widget and connect it to
+        # # the press event
+        # self.confusion_matrix_canvas = FigureCanvasTkAgg(
+        #     self.confusion_matrix_fig, master=self.confusion_matrix_frame)
+        #
+        # self.confusion_matrix_canvas.get_tk_widget().pack(side='top')
+        #
+        # self.confusion_matrix_frame.pack(expand='true', fill='x',
+        #                                  padx=self.BIG_PADDING,
+        #                                  pady=self.BIG_PADDING, side='left')
 
         # Graph Bar Error frame
         self.graph_error_frame = ttk.Frame(self.bottom_frame)
@@ -287,46 +305,69 @@ class PerceptronView:
         self.graph_error_label = ttk.Label(self.graph_error_frame,
                                            font=self.FONT_TITLE,
                                            text='Graph Error')
-        self.graph_error_label.pack(padx=self.BIG_PADDING,
-                                    pady=self.BIG_PADDING, side='top')
-        # TODO check how to set correct bounds
+        self.graph_error_label.pack(padx=self.SMALL_PADDING,
+                                    pady=self.SMALL_PADDING, side='top')
         # Create a figure
-        self.graph_error_fig = Figure(facecolor=self.BACKGROUND)
-
-        # create a subplot to plot
-        self.graph_error_ax = self.graph_error_fig.add_axes(
-            [0, 0, 1, 1], facecolor=f'tab:gray')
-        # .add_subplot(111,
-        #              xlim=[0, 1],
-        #              ylim=[0, 1],
-        #              facecolor=f'tab:gray')
-
-        # Create a figure canvas to can connect the widget and connect it to
-        # the press event
-        self.graph_error_canvas = FigureCanvasTkAgg(
-            self.graph_error_fig, master=self.graph_error_frame)
-        self.graph_error_canvas.get_tk_widget().pack(side='top')
-        ################
-        self.graph_error_frame.pack(expand='true', fill='x',
-                                    padx=self.BIG_PADDING,
-                                    pady=self.BIG_PADDING, side='right')
+        self.create_graph_error()
         self.bottom_frame.pack(fill='x', padx=self.BIG_PADDING,
                                pady=self.BIG_PADDING, side='top')
 
         # get screen width and height if not, set it to 1440x1080 resolution
         screen_width = self.toplevel.winfo_screenwidth()
         screen_height = self.toplevel.winfo_screenheight()
-        self.WINDOW_WIDTH = screen_width if screen_width is not None else 1440
-        self.WINDOW_HEIGHT = screen_height if screen_height is not None \
-            else 900
+        # self.WINDOW_WIDTH = screen_width if screen_width is not None else 1440
+        # self.WINDOW_HEIGHT = screen_height if screen_height is not None \
+        self.WINDOW_WIDTH = 1880
+        self.WINDOW_HEIGHT = 1000
 
         # set screen size
-        self.toplevel.geometry(f"{self.WINDOW_WIDTH}x{self.WINDOW_HEIGHT}")
+        self.toplevel.geometry(f"{self.WINDOW_WIDTH}x{self.WINDOW_HEIGHT}+0+0")
         # # set screen title
         # self.toplevel.title = self.GUI_TITLE
 
         # Main widget
         self.main_window = self.toplevel
+
+    def create_graph_error(self):
+        # Create a figure
+        self.graph_error_fig = Figure()
+
+        # create a subplot to plot
+        self.graph_error_ax = self.graph_error_fig.add_subplot(111,
+                                                               ylabel='Errors',
+                                                               xlabel='Epoch')
+
+        # self.graph_error_ax.set_title('Graph Error')
+        # Create a figure canvas to can connect the widget and connect it to
+        # the press event
+        self.graph_error_canvas = FigureCanvasTkAgg(
+            self.graph_error_fig, master=self.graph_error_frame)
+        self.graph_error_canvas.get_tk_widget().pack(side='top')
+
+        self.graph_error_frame.pack(expand='true', fill='x',
+                                    padx=self.SMALL_PADDING,
+                                    pady=self.SMALL_PADDING, side='right')
+
+    def reset(self, event):
+        # clear canvas
+        self.canvas.get_tk_widget().pack_forget()
+        self.create_main_canvas()
+
+        # clear graph error
+        self.graph_error_canvas.get_tk_widget().pack_forget()
+        self.create_graph_error()
+        ##########################
+        # clear converged
+        self.converged_epoch.set('Converged epoch: Not Ready')
+        self.converged.set(f'Converged: False')
+        # clear weights
+        self.clear_weights()
+        # disable init button
+        self.initialize_button.configure(state=self.BUTTON_DISABLED)
+        # disable perceptron button
+        self.perceptron_button.configure(state=self.BUTTON_DISABLED)
+        # possible clear confusion matrix
+        pass
 
     def bipolar_changed(self, bipolar):
         print(f'Bipolar change on view to {self.bipolar.get()}')
@@ -335,9 +376,9 @@ class PerceptronView:
     def bounds_changed(self, bounds):
         print(f'Bounds change on view to {self.bounds.get()}')
         self.bounds_selected.set(
-            f'Bounds: {self.bounds.get()} , {-1 * self.bounds.get()}')
-        self.ax.set_xlim([self.bounds.get(), -1 * self.bounds.get()])
-        self.ax.set_ylim([self.bounds.get(), -1 * self.bounds.get()])
+            f'Bounds: {-self.bounds.get()} , {self.bounds.get()}')
+        self.ax.set_xlim([-self.bounds.get(), self.bounds.get()])
+        self.ax.set_ylim([-self.bounds.get(), self.bounds.get()])
         self.canvas.draw()
 
     def learning_rate_changed(self, learning_rate):
@@ -350,6 +391,34 @@ class PerceptronView:
     def max_epoch_changed(self, max_epoch):
         print(f'Max Epoch change on view to {self.max_epoch.get()}')
         self.max_epoch_select.set(f'Max Epoch: {self.max_epoch.get()}')
+
+    def converge_change(self, converge):
+        print(f'Converge change on view to {converge}')
+        self.converged.set(f'Converged: {converge["converge"]}')
+        self.converged_epoch.set(f'Converged Epoch: '
+                                 f'{converge["converged_epoch"]}')
+
+    def weights_changed(self, weights):
+        print('weights changed in View')
+        self.clear_weights()
+        for i, weight in enumerate(weights):
+            weight_label = ttk.Label(self.actual_values_labelframe,
+                                     text=f'W{i}: {weight}')
+            weight_label.pack(side='top')
+            self.weights_selected_labels.append(weight_label)
+
+    def clear_weights(self):
+        if len(self.weights_selected_labels) > 0:
+            for weight_label in self.weights_selected_labels:
+                weight_label.pack_forget()
+            pass
+
+    def current_epoch_change(self, epoch):
+        print('current epoch changed in View')
+        self.fig.texts.clear()
+        self.fig.text(self.CURRENT_EPOCH_LABEL_COORD,
+                      self.CURRENT_EPOCH_LABEL_COORD,
+                      f'{self.CURRENT_EPOCH_TEXT}: {epoch}')
 
     def data_registered(self):
         print(f'Any data test is registered')
@@ -370,17 +439,25 @@ class PerceptronView:
 
     def draw_line(self, data):
         print(f'Drawing line')
-        self.ax.plot(data["x"], data["y"])
+        self.delete_prev_line()
+        self.line = self.ax.plot(data["x"], data["y"])
         self.canvas.draw()
+        self.canvas.get_tk_widget().update()
+        plt.pause(1.0 / 60.0)
+
+    def delete_prev_line(self):
+        if self.line is not None:
+            line = self.line.pop(0)
+            line.remove()
 
     def draw_bar(self, data):
         print(f'Drawing bar')
-        self.graph_error_ax.bar(f'{data["epoch"]}: '
-                                f'{data["accumulative_error"]}',
-                                data["accumulative_error"])
+        self.graph_error_ax.bar(data["epoch"], data["errors"],
+                                label=f'{data["epoch"]}: {data["errors"]}')
         self.graph_error_canvas.draw()
 
-    # TODO update epoch
+    # TODO 3D canvas
+    # TODO draw plane in 3D canvas
 
     def run(self):
         self.main_window.deiconify()
@@ -391,8 +468,6 @@ class PerceptronView:
         ######## 5.- Rúbrica Convergencia final ########
         # 20 Pts
         # Al finalizar el entrenamiento
-        # TODO create converge label with the converges end value
-
         # TODO create a confusion matrix with the result values.
 
         # TODO receive the converge epoch number and display in the converge
@@ -401,3 +476,23 @@ class PerceptronView:
         # TODO receive an array with the confusion matrix values to display
 
         # TODO reuse the same function for draw a circle
+
+    def create_main_canvas(self):
+        # Create a figure
+        self.fig = Figure(facecolor=self.BACKGROUND)
+
+        # create a subplot to plot
+        self.ax = self.fig.add_subplot(111,
+                                       xlim=[-self.bounds.get(),
+                                             self.bounds.get()],
+                                       ylim=[-self.bounds.get(),
+                                             self.bounds.get()])
+        self.fig.text(self.CURRENT_EPOCH_LABEL_COORD,
+                      self.CURRENT_EPOCH_LABEL_COORD, self.CURRENT_EPOCH_TEXT)
+
+        # Create a figure canvas to can connect the widget and connect it to
+        # the press event
+        self.canvas = FigureCanvasTkAgg(self.fig, master=self.plot_frame)
+
+        self.canvas.get_tk_widget().pack(expand='true', fill='both',
+                                         padx=self.CANVAS_PADDING, side='top')
