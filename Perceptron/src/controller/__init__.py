@@ -32,6 +32,9 @@ class PerceptronController:
         self.view.learning_rate_scale.configure(
             command=self._on_change_learning_rate)
 
+        #clear
+        self.view.reset_button.configure(command=self._reset)
+
         # canvas clicks
         self.view.canvas.mpl_connect('button_press_event',
                                      self._on_press_canvas)
@@ -57,15 +60,22 @@ class PerceptronController:
         pub.subscribe(self.model.set_learning_rate, 'learning_rate_changed')
         pub.subscribe(self.view.learning_rate_changed, 'learning_rate_changed')
 
+        pub.subscribe(self.view.reset, 'reset')
+        pub.subscribe(self.model.reset, 'reset')
+
         pub.subscribe(self.model.set_xy, 'canvas_pressed')
         pub.subscribe(self.view.draw_point, 'point_added')
 
-        pub.subscribe(self.view.draw_bar, 'accumulative_error')
+        pub.subscribe(self.view.draw_bar, 'errors')
 
         pub.subscribe(self.view.draw_line, 'draw_line')
+        pub.subscribe(self.view.weights_changed, 'weights_changed')
+        pub.subscribe(self.view.current_epoch_change, 'current_epoch_change')
+        pub.subscribe(self.view.converge_change, 'converge')
 
         pub.subscribe(self.model.init, 'initialize_perceptron')
         pub.subscribe(self.view.perceptron_initialized, 'initialize_perceptron')
+
 
         pub.subscribe(self.model.train, 'train_perceptron')
 
@@ -132,3 +142,12 @@ class PerceptronController:
 
     def run(self):
         self.view.run()
+
+    def _reset(self):
+        print(f'Resetting all values')
+        # canvas clicks
+        pub.sendMessage('reset', event='Resetting')
+        self.view.canvas.mpl_connect('button_press_event',
+                                     self._on_press_canvas)
+        self.cid = self.view.canvas.mpl_connect('button_press_event',
+                                                self._on_first_press_canvas)
