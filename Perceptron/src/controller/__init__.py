@@ -32,7 +32,7 @@ class PerceptronController:
         self.view.learning_rate_scale.configure(
             command=self._on_change_learning_rate)
 
-        #clear
+        # clear
         self.view.reset_button.configure(command=self._reset)
 
         # canvas clicks
@@ -76,25 +76,15 @@ class PerceptronController:
         pub.subscribe(self.model.init, 'initialize_perceptron')
         pub.subscribe(self.view.perceptron_initialized, 'initialize_perceptron')
 
-
         pub.subscribe(self.model.train, 'train_perceptron')
 
+        pub.subscribe(self.model.test, 'test')
 
         ######## 5.- Rúbrica Convergencia final ########
         # 20 Pts
         # Al finalizar el entrenamiento
         # TODO bind the end of the train function to send a message to set
-        #  the epoch converge value to display Back-to-Front
-
-        # TODO bind the end of the train function to send a message to set
         #  the confusion matrix Back-to-Front
-
-        # TODO bind the canvas2D to send a message to send the coordinates if
-        #  fitted Front-to-Back
-
-        # TODO bind the test function to send a boolean with the returned
-        #  class type
-
     def _on_change_bipolar(self, _event=None):
         print(f'Checkbutton bipolar with: {self.view.bipolar.get()} value')
         pub.sendMessage('bipolar_changed', bipolar=self.view.bipolar.get())
@@ -115,15 +105,17 @@ class PerceptronController:
                         learning_rate="{:.5f}".format(float(
                             self.view.learning_rate.get())))
 
-    @staticmethod
-    def _on_press_canvas(event):
+    def _on_press_canvas(self, event):
         # left click event.button == 1, right click event.button == 3
         print(f'Canvas on pressed with: {event}')
         # event button is a enum so is saved like Button Object need explicit
         # cast to int
-        pub.sendMessage('canvas_pressed',
-                        xy={"pos": [event.xdata, event.ydata],
-                            "value": int(event.button)})
+        if self.model.is_fitted:
+            pub.sendMessage('test', xy=[event.xdata, event.ydata])
+        else:
+            pub.sendMessage('canvas_pressed',
+                            xy={"pos": [event.xdata, event.ydata],
+                                "value": int(event.button)})
 
     def _on_first_press_canvas(self, event):
         print(f'Canvas on pressed for fist time')
