@@ -59,6 +59,9 @@ class PerceptronView:
         # get absolute path for images import
         absolute_path = os.path.dirname(os.path.realpath(__file__))
 
+        # control if perceptron is fitted, if is fitted could test the data
+        self.is_fitted = False
+
         # to get a reference to the last line added
         self.line = None
 
@@ -349,6 +352,11 @@ class PerceptronView:
                                     pady=self.SMALL_PADDING, side='right')
 
     def reset(self, event):
+        self.is_fitted = False
+
+        # to get a reference to the last line added
+        self.line = None
+
         # clear canvas
         self.canvas.get_tk_widget().pack_forget()
         self.create_main_canvas()
@@ -397,6 +405,7 @@ class PerceptronView:
         self.converged.set(f'Converged: {converge["converge"]}')
         self.converged_epoch.set(f'Converged Epoch: '
                                  f'{converge["converged_epoch"]}')
+        self.is_fitted = converge["converge"]
 
     def weights_changed(self, weights):
         print('weights changed in View')
@@ -470,13 +479,7 @@ class PerceptronView:
         # Al finalizar el entrenamiento
         # TODO create a confusion matrix with the result values.
 
-        # TODO receive the converge epoch number and display in the converge
-        #  label
-
         # TODO receive an array with the confusion matrix values to display
-
-        # TODO reuse the same function for draw a circle
-
     def create_main_canvas(self):
         # Create a figure
         self.fig = Figure(facecolor=self.BACKGROUND)
