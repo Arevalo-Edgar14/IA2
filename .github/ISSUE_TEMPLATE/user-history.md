@@ -4,7 +4,7 @@ about: 'A user story is an informal, general explanation of a software feature w
   from the perspective of the end user or customer. '
 title: "[Feature]"
 labels: enhancement
-assignees: Arevalo-Edgar14
+assignees: Erev14, Arevalo-Edgar14
 
 ---
 
