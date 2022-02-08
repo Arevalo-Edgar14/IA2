@@ -11,6 +11,7 @@ assignees: Erev14, Arevalo-Edgar14
 As a [profile] I want [want] to/for can [explain]
 
 acceptance criteria:
-  - 
+
+  -
   -
   -
