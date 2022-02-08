@@ -14,10 +14,10 @@ Implementarán el algoritmo del perceptrón en un lenguaje de su elección (no m
 
 6. Subirán un reporte de práctica que tendrá las siguientes secciones:
 
-   1. una breve (5-15 líneas) descripción del algoritmo que está implementándose en la práctica, así como del lenguaje en que lo implementaron 
-   
+   1. una breve (5-15 líneas) descripción del algoritmo que está implementándose en la práctica, así como del lenguaje en que lo implementaron
+
    2. una sección de código en el que incluyan las principales funciones de entrenamiento codificadas,  
-   
-   3. un análisis comparativo entre el perceptrón y un método clásico (no inteligente) de clasificación, por ejemplo bases de datos, en el que incluirán ventajas y desventajas de uno vs. otro y 
-   
+
+   3. un análisis comparativo entre el perceptrón y un método clásico (no inteligente) de clasificación, por ejemplo bases de datos, en el que incluirán ventajas y desventajas de uno vs. otro y
+
    4. una liga a un repositorio github o almacenamiento en la nube en el que se encuentre el proyecto completo y funcional de su práctica (no olviden darme derechos para poder consultarlo!)
