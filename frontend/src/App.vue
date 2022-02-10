@@ -1,30 +1,59 @@
 <template>
-  <div id="nav">
+  <Sidebar
+    v-if="showSidebar"
+    :darkMode="darkMode"
+    :toggleSidebar="toggleSidebar"
+    :toggleDarkMode="toggleDarkMode"
+    :links="links"
+  />
+  <!-- <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  </div> -->
+  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+import Sidebar from "@/components/sidebar/Sidebar.vue";
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+@Options({
+  components: {
+    Sidebar,
+  },
+  methods: {
+    toggleSidebar() {
+      this.showSidebar = !this.showSidebar;
+    },
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+    },
+  },
+})
+export default class App extends Vue {
+  data() {
+    return {
+      showSidebar: true,
+      darkMode: !window.matchMedia("(prefers-color-scheme: light)").matches,
+      links: [
+        {
+          name: "home",
+          to: "/",
+          icon: "bx bx-home-alt icon",
+        },
+        // {
+        //   name: "perceptron",
+        //   to: "/perceptron",
+        //   icon: "bx bx-pie-chart-alt icon",
+        // },
+        {
+          name: "about",
+          to: "/about",
+          icon: "bx bx-heart icon",
+        },
+      ],
+    };
   }
 }
-</style>
+</script>
+
