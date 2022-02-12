@@ -3,23 +3,25 @@
     <nav class="sidebar close">
       <header>
         <div class="image-text">
-          <span class="image">
-            <img src="logo.png" alt="" />
-          </span>
-          <div class="text logo-text">
-            <span class="name">IA2</span>
-            <span class="profession">Machine Learning</span>
-          </div>
+          <Logo :cla="cla" :img="img" :alt="alt" />
+          <EmphasizedNonEmphasized
+            :emphasized="emphasized"
+            :nonEmphasized="nonEmphasized"
+          />
         </div>
+        <!-- ExpandArrow -->
         <i class="bx bx-chevron-right toggle"></i>
       </header>
 
+      <!-- NavMenu -->
       <div class="menu-bar">
         <div class="menu">
+          <!-- NavSearchBox -->
           <li class="search-box">
             <i class="bx bx-search icon"></i>
             <input type="text" placeholder="Search..." />
           </li>
+          <!-- NavLinks -->
           <ul class="menu-links">
             <li class="nav-link" v-for="(link, i) in links" :key="i">
               <router-link :to="link.to">
@@ -30,13 +32,16 @@
           </ul>
         </div>
 
+        <!-- NavBottom -->
         <div class="bottom-content">
+          <!-- LogOut -->
           <li class="">
-            <router-link to="/">
+            <a href="#">
               <i class="bx bx-log-out icon"></i>
               <span class="text nav-text">Logout</span>
-            </router-link>
+            </a>
           </li>
+          <!-- Mode -->
           <li class="mode">
             <div class="sun-moon">
               <i class="bx bx-moon icon moon"></i>
@@ -52,23 +57,39 @@
       </div>
     </nav>
   </div>
-  <!-- <router-view /> -->
 </template>
 
 <script lang="ts">
 import { Options, Vue, PropOptions } from 'vue-class-component';
 import Link from '@/types/Link';
+import Logo from '@/components/sidebar/Logo.vue';
+import EmphasizedNonEmphasized from '@/components/sidebar/EmphasizedNonEmphasized.vue';
 
 @Options({
+  name: 'Sidebar',
+  components: {
+    Logo,
+    EmphasizedNonEmphasized,
+  },
   props: {
     darkMode: Boolean,
-    toggleSidebar: { type: Function },
-    toggleDarkMode: { type: Function },
+    toggleSidebar: Function as PropOptions<() => void>,
+    toggleDarkMode: Function as PropOptions<() => void>,
     links: {
       required: true,
       type: Array as PropOptions<Link[]>,
     },
   },
 })
-export default class Sidebar extends Vue {}
+export default class Sidebar extends Vue {
+  cla = 'image';
+
+  img = './logo.png';
+
+  alt = 'logo';
+
+  emphasized = 'IA2';
+
+  nonEmphasized = 'Edgar Arevalo';
+}
 </script>
