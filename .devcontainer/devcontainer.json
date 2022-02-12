@@ -56,6 +56,8 @@
     "vetur.validation.templateProps": true,
     "vetur.format.enable": true,
     "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+    // NEED for single quotation on Wscats.vue
+    // "vue3snippets.singleQuote": true,
     "editor.insertSpaces": true,
     "python.defaultInterpreterPath": "/usr/local/bin/python",
     "python.linting.enabled": true,
@@ -115,12 +117,12 @@
     // "Syler.sass-indented",
     // "sibiraj-s.vscode-scss-formatter",
     // JS/TS
-    "xabikos.JavaScriptSnippets"
+    "xabikos.JavaScriptSnippets",
     // "steoates.autoimport",
     // VUE
     "sdras.vue-vscode-snippets",
     "znck.vue-language-features",
-    "Wscats.vue",
+    // "Wscats.vue",
     "johnsoncodehk.volar",
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
