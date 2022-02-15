@@ -20,9 +20,9 @@
     "remote.extensionKind": {
       "ms-azuretools.vscode-docker": "workspace"
     },
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
+    // "editor.codeActionsOnSave": {
+    //   "source.fixAll.eslint": true
+    // },
     "tslint.typeCheck": true,
     "eslint.validate": [
       "javascript",
@@ -36,6 +36,9 @@
     "editor.tabSize": 2,
     "[javascript]": {
       "editor.tabSize": 2
+    },
+    "[vue]": {
+      "editor.defaultFormatter": "octref.vetur"
     },
     "[python]": {
       "editor.tabSize": 4
@@ -51,10 +54,20 @@
         50
       ]
     },
+    "vetur.format.defaultFormatter.css": "prettier",
+    "vetur.format.defaultFormatter.postcss": "prettier",
+    "vetur.format.defaultFormatter.scss": "prettier",
+    "vetur.format.defaultFormatter.less": "prettier",
+    "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+    "vetur.format.defaultFormatter.ts": "prettier-tslint",
+    "vetur.format.defaultFormatter.js": "prettier-eslint",
+    "prettier.eslintIntegration": true,
+    "tslint.autoFixOnSave": true,
     "vetur.completion.autoImport": true,
     "vetur.experimental.templateInterpolationService": true,
     "vetur.validation.templateProps": true,
     "vetur.format.enable": true,
+    "vetur.useWorkspaceDependencies": true,
     "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
     // NEED for single quotation on Wscats.vue
     // "vue3snippets.singleQuote": true,
@@ -84,6 +97,7 @@
     "ritwickdey.LiveServer",
     "lostintangent.vsls-whiteboard",
     "vsls-contrib.codetour",
+    "wenfangdu.snippet-generator",
     // Linter
     "octref.vetur",
     "esbenp.prettier-vscode",
@@ -112,9 +126,9 @@
     // Flask
     "cstrap.flask-snippets",
     // HTML/CSS
+    "Syler.sass-indented",
     // "ecmel.vscode-html-css",
     // "abusaidm.html-snippets",
-    // "Syler.sass-indented",
     // "sibiraj-s.vscode-scss-formatter",
     // JS/TS
     "xabikos.JavaScriptSnippets",
@@ -128,7 +142,8 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     4000,
-    3000
+    3000,
+    8000
   ],
   "portsAttributes": {
     "3000": {
