@@ -14,6 +14,10 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'operator-linebreak': ['warn', 'before'],
+    'class-methods-use-this': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-unused-expressions': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    // 'operator-linebreak': ['error', 'after'],
   },
   overrides: [
     {
