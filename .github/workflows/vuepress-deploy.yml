@@ -13,5 +13,5 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         TARGET_REPO: Arevalo-Edgar14/IA2
         TARGET_BRANCH: master
-        BUILD_SCRIPT: cd frontend && yarn && yarn build
+        BUILD_SCRIPT: yarn --cwd frontend/ && yarn --cwd frontend/ build
         BUILD_DIR: blog/.vuepress/dist/
