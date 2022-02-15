@@ -1,0 +1,22 @@
+.sidebar header .toggle
+  position: absolute
+  top: 50%
+  right: -25px
+  transform: translateY(-50%) rotate(180deg)
+  height: 25px
+  width: 25px
+  background: $primary-color
+  display: flex
+  align-items: center
+  justify-content: center
+  border-radius: 50%
+  color: $sidebar-color
+  font-size: 22px
+  transition: $tran-03
+
+.sidebar.close header .toggle
+  transform: translateY(-50%)
+
+body.dark .sidebar header .toggle
+  // transform: rotate(180deg)
+  color: $text-color

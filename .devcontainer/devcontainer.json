@@ -1,149 +1,170 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.217.1/containers/python-3
 {
-	"name": "Node.js + Python 3 + Vue + Flask",
-	"build": {
-		"dockerfile": "Dockerfile",
-		"context": "..",
-		"args": { 
-			// Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
-			// Append -bullseye or -buster to pin to an OS version.
-			// Use -bullseye variants on local on arm64/Apple Silicon.
-			"VARIANT": "3.10-bullseye",
-			// Options
-			"NODE_VERSION": "lts/*"
-		},
-	},
-
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"files.eol": "\n",
-		"editor.tabSize": 2,
-		"remote.extensionKind": {
-				"ms-azuretools.vscode-docker": "workspace"
-		},
-		"editor.codeActionsOnSave": {
-				"source.fixAll.eslint": true
-		},
-		"eslint.validate": [
-				"javascript",
-				"javascriptreact",
-				"typescript",
-				"typescriptreact"
-		],
-		"editor.formatOnSave": true,
-		"editor.rulers": [80],
-		"editor.bracketPairColorization.enabled": true,
-		"workbench.colorCustomizations": {
-			"editorRuler.foreground": "#ff4081"
-		},
-		"[git-commit]": {"editor.rulers": [50]},
-		"[python]": {
-			"editor.tabSize": 4
-		},
-		"[javascript]": {
-			"editor.tabSize": 2,
-			"editor.defaultFormatter": "esbenp.prettier-vscode",
-			"editor.formatOnSave": false
-			},
-			"[javascriptreact]": {
-				"editor.tabSize": 2,
-				"editor.defaultFormatter": "esbenp.prettier-vscode",
-				"editor.formatOnSave": false
-			},
-			"[typescript]": {
-				"editor.tabSize": 2,
-				"editor.defaultFormatter": "esbenp.prettier-vscode",
-				"editor.formatOnSave": false
-			},
-			"[typescriptreact]": {
-				"editor.tabSize": 2,
-				"editor.defaultFormatter": "esbenp.prettier-vscode",
-				"editor.formatOnSave": false
-			},
-		"prettier-eslint.eslintIntegration": true,
-		"editor.insertSpaces": true,
-		"python.defaultInterpreterPath": "/usr/local/bin/python",
-		"python.linting.enabled": true,
-		"python.linting.pylintEnabled": true,
-		"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-		"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-		"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-		"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-		"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
-		"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
-		"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
-		"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
-		"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
-	},
-
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"octref.vetur",
-		"esbenp.prettier-vscode",
-		"bierner.color-info",
-		"jpoissonnier.vscode-styled-components",
-		"visualstudioexptteam.vscodeintellicode",
-		"eg2.vscode-npm-script",
-		"christian-kohler.npm-intellisense",
-		"eamodio.gitlens",
-		"davidanson.vscode-markdownlint",
-		"IBM.output-colorizer",
-		"Gruntfuggly.todo-tree",
-		"bierner.emojisense",
-		"vscode-icons-team.vscode-icons",
-		"github.vscode-pull-request-github",
-		"rangav.vscode-thunder-client",
-		"cstrap.flask-snippets",
-		"sdras.vue-vscode-snippets",
-		"alefragnani.Bookmarks",
-		"znck.vue-language-features",
-		"streetsidesoftware.code-spell-checker",
-		"ms-python.python",
-		"ms-python.vscode-pylance",
-		"ritwickdey.LiveServer",
-		"lostintangent.vsls-whiteboard",
-		"ecmel.vscode-html-css",
-		"abusaidm.html-snippets",
-		"vsls-contrib.codetour",
-		"redhat.fabric8-analytics",
-		"mikestead.dotenv",
-		"VisualStudioExptTeam.vscodeintellicode",
-		"njpwerner.autodocstring",
-		"KevinRose.vsc-python-indent",
-		"donjayamanne.python-environment-manager",
-		"xabikos.JavaScriptSnippets",
-		"christian-kohler.path-intellisense",
-		"ms-vscode.vscode-typescript-tslint-plugin",
-		"steoates.autoimport",
-		"Syler.sass-indented",
-		"sibiraj-s.vscode-scss-formatter",
-		"johnsoncodehk.volar",
-		"Wscats.vue"
-	],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [4000, 3000],
-	"portsAttributes": {
-		"3000": {
-				"label": "Flask (back-end)",
-				"onAutoForward": "notify",
-				"protocol": "http"
-		},
-		"4000": {
-			"label": "Vue (front-end)",
-			"onAutoForward": "notify",
-			"protocol": "http"
-		}
-	},
-	// need for Speed up npm install and yarn run build or yarn run dev
-	"mounts": [
-    "source=node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
-	],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "sudo chown {remoteUser} node_modules && yarn install",
-	"postAttachCommand": "",
-
-	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+  "name": "Node.js + Python 3 + Vue + Flask",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
+      // Append -bullseye or -buster to pin to an OS version.
+      // Use -bullseye variants on local on arm64/Apple Silicon.
+      "VARIANT": "3.10-bullseye",
+      // Options
+      "NODE_VERSION": "14"
+    }
+  },
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "files.eol": "\n",
+    "remote.extensionKind": {
+      "ms-azuretools.vscode-docker": "workspace"
+    },
+    // "editor.codeActionsOnSave": {
+    //   "source.fixAll.eslint": true
+    // },
+    "tslint.typeCheck": true,
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "editor.bracketPairColorization.enabled": true,
+    "editor.tabSize": 2,
+    "[javascript]": {
+      "editor.tabSize": 2
+    },
+    "[vue]": {
+      "editor.defaultFormatter": "octref.vetur"
+    },
+    "[python]": {
+      "editor.tabSize": 4
+    },
+    "workbench.colorCustomizations": {
+      "editorRuler.foreground": "#ff4081"
+    },
+    "editor.rulers": [
+      80
+    ],
+    "[git-commit]": {
+      "editor.rulers": [
+        50
+      ]
+    },
+    "vetur.format.defaultFormatter.css": "prettier",
+    "vetur.format.defaultFormatter.postcss": "prettier",
+    "vetur.format.defaultFormatter.scss": "prettier",
+    "vetur.format.defaultFormatter.less": "prettier",
+    "vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+    "vetur.format.defaultFormatter.ts": "prettier-tslint",
+    "vetur.format.defaultFormatter.js": "prettier-eslint",
+    "prettier.eslintIntegration": true,
+    "tslint.autoFixOnSave": true,
+    "vetur.completion.autoImport": true,
+    "vetur.experimental.templateInterpolationService": true,
+    "vetur.validation.templateProps": true,
+    "vetur.format.enable": true,
+    "vetur.useWorkspaceDependencies": true,
+    "vue3snippets.enable-compile-vue-file-on-did-save-code": true,
+    // NEED for single quotation on Wscats.vue
+    // "vue3snippets.singleQuote": true,
+    "editor.insertSpaces": true,
+    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+    "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+    "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+    "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+    "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+    "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+    "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+    "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+    "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    // Git
+    "eamodio.gitlens",
+    // General
+    "Gruntfuggly.todo-tree",
+    "alefragnani.Bookmarks",
+    "github.vscode-pull-request-github",
+    "rangav.vscode-thunder-client",
+    "ritwickdey.LiveServer",
+    "lostintangent.vsls-whiteboard",
+    "vsls-contrib.codetour",
+    "wenfangdu.snippet-generator",
+    // Linter
+    "octref.vetur",
+    "esbenp.prettier-vscode",
+    "tombonnike.vscode-status-bar-format-toggle",
+    // "dbaeumer.vscode-eslint",
+    // // "ms-vscode.vscode-typescript-tslint-plugin",
+    // in Code
+    "christian-kohler.path-intellisense",
+    "redhat.fabric8-analytics",
+    "streetsidesoftware.code-spell-checker",
+    "bierner.color-info",
+    "visualstudioexptteam.vscodeintellicode",
+    "christian-kohler.npm-intellisense",
+    "bierner.emojisense",
+    "vscode-icons-team.vscode-icons",
+    "mikestead.dotenv",
+    "davidanson.vscode-markdownlint",
+    // "IBM.output-colorizer",
+    // Python
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "KevinRose.vsc-python-indent",
+    "donjayamanne.python-environment-manager",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "njpwerner.autodocstring",
+    // Flask
+    "cstrap.flask-snippets",
+    // HTML/CSS
+    "Syler.sass-indented",
+    // "ecmel.vscode-html-css",
+    // "abusaidm.html-snippets",
+    // "sibiraj-s.vscode-scss-formatter",
+    // JS/TS
+    "xabikos.JavaScriptSnippets",
+    // "steoates.autoimport",
+    // VUE
+    "sdras.vue-vscode-snippets",
+    "znck.vue-language-features",
+    // "Wscats.vue",
+    "johnsoncodehk.volar",
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    4000,
+    3000,
+    8000
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Flask (back-end)",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    },
+    "4000": {
+      "label": "Vue (front-end)",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    }
+  },
+  // need for Speed up npm install and yarn run build or yarn run dev
+  "mounts": [
+    "source=frontend-node_modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+  ],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "sudo chown {remoteUser} node_modules && yarn install",
+  "postCreateCommand": "sudo chown vscode frontend/node_modules",
+  "postAttachCommand": "cd frontend && yarn install && cd ..",
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode"
 }

@@ -1,0 +1,49 @@
+.menu-bar .mode
+  background: $primary-color-light
+  position: relative
+  border-radius: 6px
+
+.menu-bar .mode .moon-sun
+  height: 50px
+  width: 60px
+  display: flex
+  align-items: center
+
+.menu-bar .mode i
+  transition: $tran-03
+//   position: absolute
+
+.menu-bar .mode .toggle-switch
+  position: absolute
+  right: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  cursor: pointer
+  height: 100%
+  min-width: 60px
+  background: $primary-color-light
+  border-radius: 6px
+  transition: $tran-05
+
+.toggle-switch .switch
+  position: relative
+  height: 22px
+  width: 44px
+  border-radius: 25px
+  background: $toggle-color
+
+.switch::before
+  content: ''
+  position: absolute
+  height: 15px
+  width: 15px
+  border-radius: 50%
+  top: 50%
+  left: 5px
+  transform: translateY(-50%)
+  background: $sidebar-color
+  transition: $tran-03
+
+body.darker .switch::before
+  left: 24px
