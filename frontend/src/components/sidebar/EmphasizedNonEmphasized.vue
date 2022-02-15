@@ -1,12 +1,12 @@
 <template>
-  <div class="text logo-text">
-    <span class="name">{{ emphasized }}</span>
-    <span class="profession">{{ nonEmphasized }}</span>
+  <div class="text header-text">
+    <span class="emphasized">{{ emphasized }}</span>
+    <span class="nonemphasized">{{ nonEmphasized }}</span>
   </div>
 </template>
 
 <script>
-import { Options, Vue, PropOptions } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component';
 
 @Options({
   name: 'EmphasizedNonEmphasized',

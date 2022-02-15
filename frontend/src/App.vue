@@ -1,16 +1,12 @@
 <template>
-  <Sidebar
-    v-if="showSidebar"
-    :darkMode="darkMode"
-    :toggleSidebar="toggleSidebar"
-    :toggleDarkMode="toggleDarkMode"
-    :links="links"
-  />
-  <!-- <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div> -->
-  <router-view />
+  <div class="main-div">
+    <Sidebar
+      :darkMode="darkMode"
+      :toggleSidebar="toggleSidebar"
+      :toggleDarkMode="toggleDarkMode"
+    />
+    <router-view class="home" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -22,29 +18,46 @@ import Sidebar from '@/components/sidebar/Sidebar.vue';
   components: {
     Sidebar,
   },
+  watch: {
+    darkMode(value) {
+      this.setDarkMode(value);
+    },
+    showSidebar(value) {
+      this.closeSideBar(value);
+    },
+  },
 })
 export default class App extends Vue {
-  showSidebar = true;
+  showSidebar = false;
 
-  darkMode = !window.matchMedia('(prefers-color-scheme: light)').matches;
+  darkMode =
+    localStorage.getItem('preferredDarkMode') !== null
+      ? localStorage.getItem('preferredDarkMode') === 'true'
+      : window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  links = [
-    {
-      name: 'home',
-      to: '/',
-      icon: 'bx bx-home-alt icon',
-    },
-    // {
-    //   name: "perceptron",
-    //   to: "/perceptron",
-    //   icon: "bx bx-pie-chart-alt icon",
-    // },
-    {
-      name: 'about',
-      to: '/about',
-      icon: 'bx bx-heart icon',
-    },
-  ];
+  setDarkMode(value: string | boolean | null): void {
+    localStorage.setItem('preferredDarkMode', String(value));
+
+    if (value) {
+      document.body.classList.add('darker');
+      document.documentElement.setAttribute('data-mode', 'dark');
+    } else {
+      document.body.classList.remove('darker');
+      document.documentElement.removeAttribute('data-mode');
+    }
+  }
+
+  closeSideBar(value: boolean): void {
+    const sidebar = document.body.querySelector('.sidebar');
+    if (value) {
+      // show
+      sidebar?.classList.remove('close');
+    } else {
+      // close
+      sidebar?.classList.add('close');
+    }
+  }
 
   toggleSidebar(): void {
     this.showSidebar = !this.showSidebar;
@@ -52,6 +65,11 @@ export default class App extends Vue {
 
   toggleDarkMode(): void {
     this.darkMode = !this.darkMode;
+  }
+
+  mounted(): void {
+    this.setDarkMode(this.darkMode);
+    this.closeSideBar(this.showSidebar);
   }
 }
 </script>
