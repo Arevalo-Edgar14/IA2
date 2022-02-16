@@ -74,13 +74,13 @@ export default class Sidebar extends Vue {
       icon: 'bx bx-git-commit icon',
     },
     {
-      name: 'about-project',
-      to: '/about-project',
+      name: 'about',
+      to: '/about',
       icon: 'bx bx-book-reader icon',
     },
     {
-      name: 'about',
-      to: '/about',
+      name: 'technologies',
+      to: '/technologies',
       icon: 'bx bx-book-open icon',
     },
   ];
