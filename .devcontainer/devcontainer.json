@@ -2,18 +2,19 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.217.1/containers/python-3
 {
   "name": "Node.js + Python 3 + Vue + Flask",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "..",
-    "args": {
-      // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
-      // Append -bullseye or -buster to pin to an OS version.
-      // Use -bullseye variants on local on arm64/Apple Silicon.
-      "VARIANT": "3.10-bullseye",
-      // Options
-      "NODE_VERSION": "14"
-    }
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  // "build": {
+  //   "dockerfile": "Dockerfile",
+  //   "context": "..",
+  //   "args": {
+  //     // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 
+  //     "VARIANT": "3.10-bullseye",
+  //     // Options
+  //     "NODE_VERSION": "14"
+  //   }
+  // },
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "files.eol": "\n",
@@ -143,7 +144,9 @@
   "forwardPorts": [
     4000,
     3000,
-    8000
+    8080,
+    // 5500,
+    // 8000
   ],
   "portsAttributes": {
     "3000": {
@@ -161,10 +164,14 @@
   "mounts": [
     "source=frontend-node_modules,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
   ],
+  // "runArgs": [
+  //   "--network=ia2-network",
+  // ],
   // Use 'postCreateCommand' to run commands after the container is created.
   // "postCreateCommand": "sudo chown {remoteUser} node_modules && yarn install",
+  // "initializeCommand": "dir",
   "postCreateCommand": "sudo chown vscode frontend/node_modules",
-  "postAttachCommand": "cd frontend && yarn install && cd ..",
+  "postAttachCommand": "yarn --cwd frontend/ install",
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode"
 }

@@ -11,6 +11,7 @@ RUN if [ "${NODE_VERSION}" != "none" ]; then su vscode -c "umask 0002 && . /usr/
 # VOLUME [ ".:/workspace:cached"]
 # Docker volume to contain node_modules for performance reason
 # VOLUME [ "frontend/node_modules:/workspace/frontend/node_modules" ]
+# EXPOSE 8080
 
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 COPY backend/requirements*.txt /tmp/pip-tmp/
@@ -23,9 +24,3 @@ RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requ
 
 # [Optional] Uncomment this line to install global node packages.
 RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g http-server @vue/cli @vue/cli-service-global" 2>&1
-
-# RUN mkdir -p /workspace/frontend/node_modules
-
-# RUN chown vscode:vscode /workspace/frontend/node_modules
-
-# RUN chmod 700 /workspace/frontend/node_modules
