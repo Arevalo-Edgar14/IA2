@@ -1,0 +1,84 @@
+<!-- logos -->
+<i class='bx bxl-flask'></i>
+<i class='bx bxl-heroku' ></i>
+<i class='bx bxl-visual-studio' ></i>
+<i class='bx bxl-github' ></i>
+<i class='bx bxl-sass' ></i>
+<i class='bx bxl-git' ></i>
+<i class='bx bxl-html5' ></i>
+<i class='bx bxl-vuejs' ></i>
+<i class='bx bxl-javascript' ></i>
+<i class='bx bxl-nodejs' ></i>
+<i class='bx bxl-markdown' ></i>
+<i class='bx bxl-python' ></i>
+
+
+<!-- Bar -->
+<i class='bx bx-bar-chart-alt-2'></i>
+<i class='bx bx-line-chart'></i>
+<i class='bx bx-bar-chart-alt' ></i>
+<i class='bx bx-bar-chart' ></i>
+<i class='bx bx-chart' ></i>
+
+<!-- Faces -->
+<i class='bx bx-meh-alt'></i>
+<i class='bx bx-happy-alt' ></i>
+<i class='bx bx-cool' ></i>
+<i class='bx bx-tired' ></i>
+<i class='bx bx-smile' ></i>
+<i class='bx bx-angry' ></i>
+<i class='bx bx-happy-heart-eyes' ></i>
+<i class='bx bx-dizzy' ></i>
+<i class='bx bx-confused' ></i>
+<i class='bx bx-wink-smile' ></i>
+<i class='bx bx-shocked' ></i>
+<i class='bx bx-happy-beaming' ></i>
+<i class='bx bx-meh-blank' ></i>
+<i class='bx bx-upside-down' ></i>
+<i class='bx bx-line-chart-down' ></i>
+
+<!-- Code -->
+<i class='bx bx-code' ></i>
+<i class='bx bx-code-curly' ></i>
+
+<!-- Actions -->
+<i class='bx bx-pause' ></i>
+<i class='bx bx-play' ></i>
+<i class='bx bx-reset' ></i>
+
+<!-- Git as ia icons -->
+<i class='bx bx-git-commit' ></i>  <!-- neuron -->
+<i class='bx bx-git-pull-request' ></i> <!-- Adaline-->
+<i class='bx bx-git-compare'></i> <!-- backpropagation-->
+<!-- Multi capa-->
+<i class='bx bx-git-repo-forked' ></i> 
+<i class='bx bx-git-merge' ></i>
+<i class='bx bx-git-branch' ></i>
+<i class='bx bx-network-chart'></i>
+<i class='bx bx-vector' ></i>
+<i class='bx bx-brain' ></i>
+
+<!-- confusion Matrix -->
+<i class='bx bx-grid-alt' ></i>
+<i class='bx bx-grid-small' ></i>
+
+<!-- Layers -->
+<i class='bx bx-layer-plus'></i>
+<i class='bx bx-layer-minus' ></i>
+
+<!-- Plane -->
+<i class='bx bx-border-inner'></i>
+
+<!-- settings -->
+<i class='bx bx-abacus'></i>
+
+<!-- Converge -->
+<i class='bx bx-message-check'></i>
+<i class='bx bx-message-x' ></i>
+<i class='bx bx-message-square-check' ></i>
+<i class='bx bx-message-square-x' ></i>
+
+<!-- About -->
+<i class='bx bx-book-open'></i>
+<i class='bx bx-book-content' ></i>
+<i class='bx bx-book-reader' ></i>
