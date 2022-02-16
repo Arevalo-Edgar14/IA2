@@ -3,6 +3,7 @@
     <Sidebar
       :darkMode="darkMode"
       :toggleSidebar="toggleSidebar"
+      :openSidebar="openSidebar"
       :toggleDarkMode="toggleDarkMode"
     />
     <router-view class="home" />
@@ -23,7 +24,7 @@ import Sidebar from '@/components/sidebar/Sidebar.vue';
       this.setDarkMode(value);
     },
     showSidebar(value) {
-      this.closeSideBar(value);
+      this.doShowSidebar(value);
     },
   },
 })
@@ -48,15 +49,17 @@ export default class App extends Vue {
     }
   }
 
-  closeSideBar(value: boolean): void {
+  doShowSidebar(value: boolean): void {
     const sidebar = document.body.querySelector('.sidebar');
     if (value) {
-      // show
       sidebar?.classList.remove('close');
     } else {
-      // close
       sidebar?.classList.add('close');
     }
+  }
+
+  openSidebar(): void {
+    this.showSidebar = true;
   }
 
   toggleSidebar(): void {
@@ -69,7 +72,7 @@ export default class App extends Vue {
 
   mounted(): void {
     this.setDarkMode(this.darkMode);
-    this.closeSideBar(this.showSidebar);
+    this.doShowSidebar(this.showSidebar);
   }
 }
 </script>

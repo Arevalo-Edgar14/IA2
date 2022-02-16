@@ -15,6 +15,7 @@
       :links="links"
       :toggleDarkMode="toggleDarkMode"
       :darkMode="darkMode"
+      :openSidebar="openSidebar"
     />
   </nav>
 </template>
@@ -38,12 +39,22 @@ import NavMenu from '@/components/sidebar/navbar/NavMenu.vue';
     darkMode: Boolean,
     toggleDarkMode: Function as PropOptions<() => void>,
     toggleSidebar: Function as PropOptions<() => void>,
+    openSidebar: Function as PropOptions<() => void>,
+  },
+  watch: {
+    darkMode(value) {
+      this.setImage(value);
+    },
   },
 })
 export default class Sidebar extends Vue {
   cla = 'image';
 
   img = './logo.png';
+
+  setImage(value: boolean): void {
+    this.img = value ? './logo-dark.png' : './logo.png';
+  }
 
   alt = 'logo';
 
@@ -57,15 +68,20 @@ export default class Sidebar extends Vue {
       to: '/',
       icon: 'bx bx-home-alt icon',
     },
-    // {
-    //   name: "perceptron",
-    //   to: "/perceptron",
-    //   icon: "bx bx-pie-chart-alt icon",
-    // },
+    {
+      name: 'perceptron',
+      to: '/perceptron',
+      icon: 'bx bx-git-commit icon',
+    },
+    {
+      name: 'about-project',
+      to: '/about-project',
+      icon: 'bx bx-book-reader icon',
+    },
     {
       name: 'about',
       to: '/about',
-      icon: 'bx bx-heart icon',
+      icon: 'bx bx-book-open icon',
     },
   ];
 }

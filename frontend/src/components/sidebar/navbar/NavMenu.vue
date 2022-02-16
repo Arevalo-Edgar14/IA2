@@ -1,7 +1,7 @@
 <template>
   <div class="menu-bar">
     <div class="menu">
-      <NavSearchBox :search="search" />
+      <NavSearchBox :search="search" :openSidebar="openSidebar" />
       <NavLinks :links="links" />
     </div>
 
@@ -36,6 +36,7 @@ import NavBottom from '@/components/sidebar/navbar/NavBottom.vue';
       require: true,
       type: Boolean,
     },
+    openSidebar: Function as PropOptions<() => void>,
   },
 })
 export default class NavMenu extends Vue {

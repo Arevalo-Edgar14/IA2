@@ -1,5 +1,5 @@
 <template>
-  <li class="search-box" @click="toggleSidebar">
+  <li class="search-box" @click="openSidebar">
     <i class="bx bx-search icon"></i>
     <input type="text" placeholder="Search..." />
   </li>
@@ -15,7 +15,7 @@ import { Options, Vue, PropOptions } from 'vue-class-component';
       required: true,
       type: String,
     },
-    toggleSidebar: Function as PropOptions<() => void>,
+    openSidebar: Function as PropOptions<() => void>,
   },
 })
 export default class NavSearchBox extends Vue {}
