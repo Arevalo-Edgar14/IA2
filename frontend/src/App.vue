@@ -13,6 +13,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Sidebar from '@/components/sidebar/Sidebar.vue';
+// import '@/plugins/chart';
 
 @Options({
   name: 'App',

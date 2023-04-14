@@ -17,6 +17,9 @@ module.exports = {
     'operator-linebreak': ['warn', 'before'],
     'class-methods-use-this': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-unused-expressions': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'object-shorthand': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'comma-dangle': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'object-curly-newline': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     // 'operator-linebreak': ['error', 'after'],
   },
   overrides: [

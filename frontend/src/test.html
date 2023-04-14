@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Sign In with Auth0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+</head>
+<body>
+
+  <!--[if IE 8]>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ie8/0.2.5/ie8.js"></script>
+  <![endif]-->
+
+  <!--[if lte IE 9]>
+  <script src="https://cdn.auth0.com/js/base64.js"></script>
+  <script src="https://cdn.auth0.com/js/es5-shim.min.js"></script>
+  <![endif]-->
+
+  <script src="https://cdn.auth0.com/js/lock/11.32/lock.min.js"></script>
+  <script>
+    // Decode utf8 characters properly
+    var config = JSON.parse(decodeURIComponent(escape(window.atob('@@config@@'))));
+    config.extraParams = config.extraParams || {};
+    var connection = config.connection;
+    var prompt = config.prompt;
+    var languageDictionary;
+    var language = 'es';
+
+    const url = new URL(config.callbackURL);
+    const terms = `Yo acepto los <a href='${url.host}/help/terms-and-conditions' target='_blank'>terminos de servicio</a> y <a href='${url.host}/help/privacy' target='_blank'>politica de privacidad</a>.`;
+    if (config.dict && config.dict.signin && config.dict.signin.title) {
+      languageDictionary = {
+        title: "Iniciar Sesión",
+        signUpTerms: "Yo acepto los <a href='http://localhost:4000/help/terms-and-conditions' target='_blank'>terminos de servicio</a> y <a href='http://localhost:4000/help/privacy' target='_blank'>politica de privacidad</a>.",
+        //signUpTerms: terms
+      };
+    } else if (typeof config.dict === 'string') {
+      language = config.dict;
+    }
+    var loginHint = config.extraParams.login_hint;
+    var colors = config.colors || {};
+
+    // Available Lock configuration options: https://auth0.com/docs/libraries/lock/v11/configuration
+    var lock = new Auth0Lock(config.clientID, config.auth0Domain, {
+      auth: {
+        redirectUrl: config.callbackURL,
+        responseType: (config.internalOptions || {}).response_type ||
+          (config.callbackOnLocationHash ? 'token' : 'code'),
+        params: config.internalOptions
+      },
+      configurationBaseUrl: config.clientConfigurationBaseUrl,
+      overrides: {
+        __tenant: config.auth0Tenant,
+        __token_issuer: config.authorizationServer.issuer
+      },
+      assetsUrl:  config.assetsUrl,
+      allowedConnections: connection ? [connection] : null,
+      rememberLastLogin: !prompt,
+      language: language,
+      languageBaseUrl: config.languageBaseUrl,
+      languageDictionary: languageDictionary,
+      theme: {
+        logo: config.icon,
+        //logo:            'YOUR LOGO HERE',
+        primaryColor:    colors.primary ? colors.primary : 'green'
+      },
+      prefill: loginHint ? { email: loginHint, username: loginHint } : null,
+      closable: false,
+      defaultADUsernameFromEmailPrefix: false,
+      // added
+      allowAutocomplete: true,
+      allowPasswordAutocomplete: true,
+      allowShowPassword: true,
+      autofocus: true,
+      mustAcceptTerms: true,
+
+      additionalSignUpFields: [{
+        name: "given_name",
+    		storage: "root",
+        placeholder: "Ingresa tu nombre",
+        validator: function(name) {
+          return {
+             valid: name.length > 0,
+             hint: "Requerido" // optional
+          };
+        }
+      },{
+        name: "family_name",
+    		storage: "root",
+        placeholder: "Ingresa tu apellido",
+        validator: function(name) {
+          return {
+             valid: name.length > 0,
+             hint: "Requerido" // optional
+          };
+        }
+      },{
+        type: "select",
+        name: "user_type",
+        label: "Tipo de usuario:",
+        placeholder: "Selecciona tu tipo de usuario",
+        options: [
+          {value: "student", label: "Estudiante"},
+          {value: "owner", label: "Arrendatario"},
+        ],
+        prefill: "student"
+      },{
+        type: "checkbox",
+        name: "consentGiven",
+        prefill: "true",
+        placeholder: "Consiento el procesamiento de los datos"
+      },{
+        type: "hidden",
+        name: "consentTimestamp",
+        value: Date.now().toString()
+      }]
+    });
+
+    if(colors.page_background) {
+      var css = '.auth0-lock.auth0-lock .auth0-lock-overlay { background: ' +
+                  colors.page_background +
+                ' }';
+      var style = document.createElement('style');
+
+      style.appendChild(document.createTextNode(css));
+
+      document.body.appendChild(style);
+    }
+
+    lock.show();
+  </script>
+</body>
+</html>

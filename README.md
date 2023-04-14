@@ -27,6 +27,8 @@ maybe anaconda will work (no idea if had ``pypubsub`` and ``tkinter``)
 In every project (Folder), will contain a requirements.txt file with the needed
 dependencies:
 
+``copy backend/requirements*.txt .devcontainer/``
+
 For python3
 
 ``pip3 install -r requirements.txt``
